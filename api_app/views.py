@@ -8,7 +8,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK,HTTP_400_BAD_REQUEST,HTTP_204_NO_CONTENT
 
 # Class Based View Api View
-class Api_create_read(APIView):
+class api_create_read(APIView):
     def post(self,request,*args,**kwargs):
         serailizer = api_serializer(data=request.data)
         if serailizer.is_valid():
@@ -20,7 +20,7 @@ class Api_create_read(APIView):
         serailizer = api_serializer(qs,many=True)
         return Response(serailizer.data)
 
-class Api_read_update_delete(APIView):
+class api_read_update_delete(APIView):
     def get(self,request,pk,*args,**kwargs):
         qs = api_model.objects.get(id=pk)
         serializer = api_serializer(qs,many=False)
@@ -38,8 +38,8 @@ class Api_read_update_delete(APIView):
         return Response('delete_data successfully',status=status.HTTP_204_NO_CONTENT)
 
 # Function based View Apiview
-@api_view(['POST','GET'])
-def Api_view_create(request):
+@api_view(['POST'])
+def api_view_create(request):
     if request.method == 'POST':
         serailizer = api_serializer(data=request.data)
         if serailizer.is_valid():
@@ -47,17 +47,17 @@ def Api_view_create(request):
             return Response('created data successfully',status=status.HTTP_200_OK)
         return Response(serailizer.errors,status=status.HTTP_400_BAD_REQUEST)
 @api_view(['GET'])
-def Api_view_list(request):
+def api_view_list(request):
     qs = api_model.objects.all()
     serailizer = api_serializer(qs,many=True)
     return Response(serailizer.data)
 @api_view(['GET'])
-def Api_view_retrieve(request,pk):
+def api_view_retrieve(request,pk):
     qs = api_model.objects.get(id=pk)
     serializer = api_serializer(qs)
     return Response(serializer.data)
 @api_view(['PUT'])
-def Api_view_update(request,pk):
+def api_view_update(request,pk):
     qs = api_model.objects.get(id=pk)
     serializer = api_serializer(qs,data=request.data)
     if serializer.is_valid():
@@ -65,7 +65,7 @@ def Api_view_update(request,pk):
         return Response('update data successfully',status=status.HTTP_200_OK)
     return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 @api_view(['DELETE'])
-def Api_view_delete(request,pk):
+def api_view_delete(request,pk):
     qs = api_model.objects.get(id=pk)
     qs.delete()
     return Response('delete data successfully',status=status.HTTP_200_OK)

@@ -5,6 +5,6 @@ from.serializer import crud_serializer
 # Create your views here.
 
 
-class Crud_view(ModelViewSet):
+class crud_view(ModelViewSet):
     serializer_class = crud_serializer
     queryset = crud_model.objects.all()
